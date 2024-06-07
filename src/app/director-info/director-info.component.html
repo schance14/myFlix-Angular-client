@@ -1,0 +1,13 @@
+<mat-card-header>
+  <mat-card-title>Director:</mat-card-title>
+</mat-card-header>
+<mat-card-content>
+  <p>Name:</p>
+  <p>{{ data.Name }}</p>
+  <p>Bio:</p>
+  <p>{{ data.Description }}</p>
+  <p>Birth:</p>
+  <p>{{ data.Birth | date : "longDate" }}</p>
+  <p>Death:</p>
+  <p>{{ data.Death | date : "longDate" }}</p>
+</mat-card-content>
