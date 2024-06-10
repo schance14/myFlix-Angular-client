@@ -2,7 +2,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import { UserRegistrationService } from '../fetch-api-data.service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { response } from 'express';
 
 
 
@@ -25,8 +24,6 @@ constructor(
 ){}
 
   ngOnInit(): void {
-    this.updateProfile();
-    this.getFavoriteMovies();
   }
 
 userProfile(): void{ 
@@ -35,8 +32,8 @@ userProfile(): void{
   this.userData.Password = this.userData.Password;
   this.userData.Email = this.userData.Email;
   this.userData.Birthday = this.userData.Birthday;
-  this.fetchApiData.getAllMovies().subscribe((response) => {
-    this.favoritesList = response.filter((movie:any) => this.user.favoritesList.includes(movie._id));
+  this.fetchApiData.getAllMovies().subscribe((resp) => {
+    this.favoritesList = resp.filter((movie:any) => this.user.favoritesList.includes(movie._id));
   })
 }
 
@@ -52,16 +49,16 @@ deleteUser(): void {
   this.router.navigate(['/welcome']);
 }
 
-getFavoriteMovies(): void {
-  this.user = this.fetchApiData.getUser();
+fetchFavoriteMovies(): void {
+  this.user= this.fetchApiData.getFavoriteMovies();
   this.userData.favoritesList = this.user.favoritesList;
-  this.favoritesList = this.user.favoritesList;
+  this.favoritesList = this.user.favoritesList; 
 }
 
 updateProfile(): void {
   this.fetchApiData.editUser().subscribe((resp) => {
     this.fetchApiData.editUser = resp;
-    localStorage.setItem('user', JSON.stringify(response));
+    localStorage.setItem('user', JSON.stringify(resp));
     this.snackbar.open('You have sucessfully updated your profile!', 'Okay', {
       duration: 2000
     });
