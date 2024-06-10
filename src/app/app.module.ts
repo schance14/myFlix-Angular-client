@@ -23,10 +23,17 @@ import { WelcomePageComponent } from './welcome-page/welcome-page.component';
 import { RouterModule, Routes } from '@angular/router';
 
 import { MatIconModule } from '@angular/material/icon';
+import { UserProfileFormComponent } from './user-profile-form/user-profile-form.component';
+import { GenreInfoComponent } from './genre-info/genre-info.component';
+import { DirectorInfoComponent } from './director-info/director-info.component';
+import { SynopsisInfoComponent } from './synopsis-info/synopsis-info.component';
+import { AppNavbarComponent } from './app-navbar/app-navbar.component';
+import { MatMenuModule } from '@angular/material/menu';
 
 const appRoutes: Routes = [
   { path: 'welcome', component: WelcomePageComponent },
   { path: 'movies', component: MovieCardComponent },
+  { path: 'profile', component: UserProfileFormComponent},
   { path: '', redirectTo: 'welcome', pathMatch: 'prefix' },
 ];
 
@@ -38,6 +45,11 @@ const appRoutes: Routes = [
     UserLoginFormComponent,
     MovieCardComponent,
     WelcomePageComponent,
+    UserProfileFormComponent,
+    GenreInfoComponent,
+    DirectorInfoComponent,
+    SynopsisInfoComponent,
+   
   ],
   imports: [
     BrowserModule,
@@ -53,6 +65,9 @@ const appRoutes: Routes = [
     MatSnackBarModule,
     RouterModule.forRoot(appRoutes),
     MatIconModule,
+    AppNavbarComponent,
+    MatButtonModule,
+    MatMenuModule
 
   ],
   providers: [

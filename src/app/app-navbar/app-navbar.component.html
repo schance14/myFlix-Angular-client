@@ -1,0 +1,8 @@
+<div class="navbar">
+  <button mat-button [matMenuTriggerFor]="menu">Menu</button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="moviesPage()">Movies</button>
+    <button mat-menu-item (click)="profilePage()">Profile</button>
+    <button mat-menu-item (click)="userLogout()">Logout</button>
+  </mat-menu>
+</div>
