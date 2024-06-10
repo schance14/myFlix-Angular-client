@@ -1,4 +1,6 @@
-<div style="display: flex">
+<app-app-navbar></app-app-navbar>
+
+<div style="display: flex" class="movie-container">
   <mat-card *ngFor="let movie of movies" style="flex: 1 1 auto">
     <mat-card-header>
       <mat-card-title>{{ movie.Title }}</mat-card-title>
@@ -6,8 +8,8 @@
         >Directed by: {{ movie.Director.Name }}</mat-card-subtitle
       >
     </mat-card-header>
-    <img src="{{ movie.ImagePath }}" width="{{ 200 }}" />
-    <mat-card-actions>
+    <!-- <img src="{{ movie.ImagePath }}" width="{{ 200 }}" />  -->
+    <mat-card-actions class="movie-card">
       <button
         mat-button
         color="primary"
