@@ -29,6 +29,7 @@ import { DirectorInfoComponent } from './director-info/director-info.component';
 import { SynopsisInfoComponent } from './synopsis-info/synopsis-info.component';
 import { AppNavbarComponent } from './app-navbar/app-navbar.component';
 import { MatMenuModule } from '@angular/material/menu';
+import { UpdateProfileFormComponent } from './update-profile-form/update-profile-form.component';
 
 const appRoutes: Routes = [
   { path: 'welcome', component: WelcomePageComponent },
@@ -49,6 +50,7 @@ const appRoutes: Routes = [
     GenreInfoComponent,
     DirectorInfoComponent,
     SynopsisInfoComponent,
+    UpdateProfileFormComponent,
    
   ],
   imports: [
