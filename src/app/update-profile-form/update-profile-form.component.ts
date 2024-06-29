@@ -8,7 +8,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   templateUrl: './update-profile-form.component.html',
   styleUrl: './update-profile-form.component.scss'
 })
-export class UpdateProfileFormComponent {
+export class UpdateProfileFormComponent implements OnInit{
   @Input() userData = {
     Name: '',
     Password: '',
@@ -26,7 +26,6 @@ ngOnInit(): void {}
 updateUser(): void{
   this.fetchApiData.editUser(this.userData).subscribe(
     (resp: any) => {
-      this.userData = resp;
       console.log(resp);
       this.snackBar.open('Update', 'Success', {
         duration: 2000,
@@ -39,9 +38,5 @@ updateUser(): void{
     }
   );
 }
-
-
-
-
 
 }
