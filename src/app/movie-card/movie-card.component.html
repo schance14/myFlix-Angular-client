@@ -1,7 +1,7 @@
 <app-app-navbar></app-app-navbar>
 
 <div style="display: flex" class="movie-container">
-  <mat-card *ngFor="let movie of movies" style="flex: 1 1 auto">
+  <mat-card *ngFor="let movie of movies">
     <mat-card-header>
       <mat-card-title>{{ movie.Title }}</mat-card-title>
       <mat-card-subtitle
@@ -40,6 +40,7 @@
       </button>
       <button
         mat-icon-button
+        class="heart-icon"
         (click)="
           isFavorite(movie)
             ? deleteMovieFromFavorites(movie)

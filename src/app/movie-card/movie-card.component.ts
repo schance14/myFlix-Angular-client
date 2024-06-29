@@ -16,37 +16,37 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class MovieCardComponent implements OnInit {
   movies: any[] = [];
   user: any = {};
-  favoritesList: any[] = [];
-  userData = { Name: '', favoritesList: [] };
-
+  FavoriteMovies: any [] = [];
+  userData = { Name: '', FavoriteMovies: [] };
+  
   constructor(public fetchApiData: UserRegistrationService, public dialog: MatDialog, public snackBar: MatSnackBar,
     public router: Router) { }
 
 ngOnInit(): void {
   this.getMovies();
- 
+  this.getUserData();
 }
 
 getMovies(): void {
   this.fetchApiData.getAllMovies().subscribe((resp: any) => {
-      this.movies = resp;
+      this.movies = resp || [];
       console.log(this.movies);
       return this.movies;
-    });
+    }
+    );
   }
-  // getUsers(): void {
-  //   const { Name } = JSON.parse(
-  //     localStorage.getItem('currentUser') || '{}'
-  //   );
-  //   this.fetchApiData.getUser().subscribe((resp: any) => {
-  //     this.user = resp;
-  //     const currentUser = this.user.filter(
-  //       (user: { Name: any; }) => user.Name === Name
-  //     );
 
-  //     this.favoritesList = currentUser[0].FavoriteMovies;
-  //   });
-  // }
+  getUserData(): void {
+    this.fetchApiData.getUser().subscribe(
+      (resp: any) => {
+        this.user = resp|| {};
+        this.FavoriteMovies = this.userData.FavoriteMovies || [];
+        console.log(this.user);
+      },
+      error => {
+        console.error(error);
+        });
+      }
 
   openGenre(name: string, description: string): void {
   this.dialog.open(GenreInfoComponent, {
@@ -77,44 +77,61 @@ openSynopsis(title: string, description: string): void{
   })
 }
 
-isFavorite(movieId: any): boolean {
-  const favoriteMovie = this.favoritesList.filter((title) => title === movieId);
-  return favoriteMovie.length ? true : false;
+isFavorite(movie: any): boolean {
+  return this.FavoriteMovies.includes(movie._id);
 }
 
 addMovieToFavorites(movie: any): void{
-  const movieId = movie._id;
-  if (!movieId || typeof movieId !== 'string') {
-    this.snackBar.open('Invalid movie ID', 'Okay', {
+  this.fetchApiData.addFavoriteMovies(movie).subscribe((resp: any) => {
+    console.log(resp);
+
+    //   // Ensures user object is properly structured
+    //  if (!this.user.FavoriteMovies) {
+    //   this.user.FavoriteMovies = [];
+    // }
+
+    this.user.FavoriteMovies.push(movie._id);
+        localStorage.setItem('user', JSON.stringify(this.user));
+        this.FavoriteMovies.push(movie);
+        this.addMovieToFavorites(true);
+    this.snackBar.open('Movie added to list!', 'Success', {
       duration: 2000,
     });
-    return;
+    console.log(this.FavoriteMovies);
+  },  (error: any) => {
+    console.error(error);
+    this.snackBar.open('Error adding movie to favorites', 'Close', {
+      duration: 2000,
+    });
   }
-  this.fetchApiData.addFavoriteMovies(movieId).subscribe((resp: any)=> {
-    console.log(resp);
-    const user = JSON.parse(localStorage.getItem('currentUser') || '');
-    if (user && user.favoritesList) {
-    user.favoritesList.push(movieId);
-    localStorage.setItem('currentUser', JSON.stringify(user));
-    }
-  })
-  this.favoritesList.push(movie.Title);
-      this.snackBar.open('Movie added to your list!', 'Okay', {
-        duration: 2000,
-      });
-  }
+  );
+}
 
   deleteMovieFromFavorites(movie: any): void{
-    this.fetchApiData.deleteFavoriteMovie().subscribe((resp: any) => {
+    this.fetchApiData.deleteFavoriteMovie(movie).subscribe((resp: any) => {
       console.log(resp);
-      const user = JSON.parse(localStorage.getItem('currentUser') || '');
-      user.favoritesList = user.favoritesList.filter(
-        (title: string) => title !== movie.Title
+
+      // Ensures user object is properly structured
+      if (!this.user.FavoriteMovies) {
+        this.user.FavoriteMovies = [];
+      }
+
+
+      this.user.FavoriteMovies = this.user.FavoriteMovies.filter(
+        (id: string) => id !== movie._id
       );
-      localStorage.setItem('currentUser', JSON.stringify(user));
+      localStorage.setItem('user', JSON.stringify(this.user));
+      this.FavoriteMovies = this.FavoriteMovies.filter(
+        (id: string) => id !== movie._id
+      );
+      this.deleteMovieFromFavorites(true);
       this.snackBar.open('Removed from your list!', 'Okay', {
         duration: 2000,
       });
+      console.log(this.FavoriteMovies);
+      },
+      (error: any) => {
+        console.error(error);
     })
   }
 }
