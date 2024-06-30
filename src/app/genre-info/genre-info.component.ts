@@ -7,6 +7,10 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
   styleUrls: ['./genre-info.component.scss']
 })
 export class GenreInfoComponent {
+  /**
+   * A dialog to view specific movies genre information.
+   * @param data - Data injected into the dialog, which displays a movie's genre name, and that genre's description. 
+   */
   constructor(
     @Inject(MAT_DIALOG_DATA)
     public data: {

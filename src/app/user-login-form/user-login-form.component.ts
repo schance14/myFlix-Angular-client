@@ -1,14 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-
-// You'll use this import to close the dialog on success
 import { MatDialogRef } from '@angular/material/dialog';
-
-// This import brings in the API calls we created in 6.2
 import { UserRegistrationService } from '../fetch-api-data.service';
-
-// This import is used to display notifications back to the user
 import { MatSnackBar } from '@angular/material/snack-bar';
-
 import { Router } from '@angular/router';
 
 @Component({
@@ -29,12 +22,14 @@ constructor(
 ngOnInit(): void {
 }
 
-// This is the function responsible for sending the form inputs to the backend
+/**
+ * Makes an API call to the login method from the 'fetchApiData' service.
+ * Will store user data to local storage and will route user to movies page on successful login.
+ */
 userLogin(): void {
     this.fetchApiData.userLogin(this.userData).subscribe((result) => {
       localStorage.setItem('user', JSON.stringify(result.user));
       localStorage.setItem('token', result.token);
-  // Logic for a successful user login goes here! 
      this.dialogRef.close(); // This will close the modal on success!
      this.snackBar.open(result, 'OK', {
         duration: 2000

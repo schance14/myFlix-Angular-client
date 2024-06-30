@@ -23,6 +23,10 @@ constructor(
 
 ngOnInit(): void {}
 
+/**
+ * Method that fetches the PUT API call to update a user's information. 
+ * Will return a display message of success if the update is succesful or no success if the update fails. 
+ */
 updateUser(): void{
   this.fetchApiData.editUser(this.userData).subscribe(
     (resp: any) => {

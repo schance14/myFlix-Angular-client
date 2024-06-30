@@ -7,6 +7,10 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
   styleUrls: ['./synopsis-info.component.scss']
 })
 export class SynopsisInfoComponent implements OnInit { 
+  /**
+   * A dialog to view a movies synopsis. 
+   * @param data - Data injected into the dialog to display a movie's title and synopsis. 
+   */
   constructor(
     @Inject(MAT_DIALOG_DATA)
     public data: {

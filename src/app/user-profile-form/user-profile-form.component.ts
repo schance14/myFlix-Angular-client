@@ -28,6 +28,9 @@ constructor(
     this.userProfile();
   }
 
+/**
+ * Fetches the 'getUser' method to produce the current user's name, email, birthday, and favorite movies list.
+ */
 userProfile(): void{ 
   this.fetchApiData.getUser().subscribe((resp: any) =>{
   this.user = resp || {};
@@ -38,7 +41,10 @@ userProfile(): void{
   this.fetchFavoriteMovies();
   })
 }
-
+/**
+ * Fetches the 'deleteUser' method to clear a user's data from local storage and erase account.
+ * Will open snackbar message if successfull and will route the user back to the welcome page. 
+ */
 deleteProfile(): void {
   this.fetchApiData.deleteUser().subscribe((resp: any) => {
     console.log('Deleted Profile!', resp);
@@ -50,6 +56,10 @@ deleteProfile(): void {
   this.router.navigate(['/welcome']);
 }
 
+/**
+ * Fetches the 'getAllMovies' method to find the current user's favorite movie's list.
+ * Will return the list of movies that have been favorited.
+ */
 fetchFavoriteMovies(): void {
   this.fetchApiData.getAllMovies().subscribe((resp: any) => {
     this.movies = resp;

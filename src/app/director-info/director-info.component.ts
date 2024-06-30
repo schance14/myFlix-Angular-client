@@ -8,6 +8,10 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 
 export class DirectorInfoComponent implements OnInit {
+  /**
+   * A dialog to view a movies director and that directors information.
+   * @param data -Data injected into the dialog to display a movie's director and that director's name, bio, and birthdate.
+   */
   constructor(
     @Inject(MAT_DIALOG_DATA)
     public data: {

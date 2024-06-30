@@ -27,6 +27,9 @@ ngOnInit(): void {
   this.getUserData();
 }
 
+/**
+ * Fetches all movies from database.
+ *  */
 getMovies(): void {
   this.fetchApiData.getAllMovies().subscribe((resp: any) => {
       this.movies = resp || [];
@@ -35,6 +38,10 @@ getMovies(): void {
     }
     );
   }
+
+/**
+* Will retrieve a current user's data.
+*/
 
   getUserData(): void {
     this.fetchApiData.getUser().subscribe(
@@ -48,6 +55,12 @@ getMovies(): void {
         });
       }
 
+/**
+* * Opens dialog from GenreInfoComponent to display a movies genre information.
+* @param name - Movie genre name
+* @param description - Movie genre description
+*/
+      
   openGenre(name: string, description: string): void {
   this.dialog.open(GenreInfoComponent, {
     data: {
@@ -57,6 +70,13 @@ getMovies(): void {
   })
 }
 
+/**
+ * Opens dialog from the DirectorInfoComponent to display a movies director information.
+ * @param name - Director's name
+ * @param description - Director's bio
+ * @param birth - Director's birthdate
+ * @param death - Director's date of death if applicable 
+ */
 openDirector(name: string, description: string, birth: string, death: string): void {
   this.dialog.open(DirectorInfoComponent, {
     data: {
@@ -68,6 +88,11 @@ openDirector(name: string, description: string, birth: string, death: string): v
   })
 }
 
+/**
+ * Opens dialog from the SynopsisInfoComponent to display a movies synopsis.
+ * @param title - Movies title
+ * @param description - Movies synopsis
+ */
 openSynopsis(title: string, description: string): void{
   this.dialog.open(SynopsisInfoComponent, {
     data: {
@@ -77,10 +102,19 @@ openSynopsis(title: string, description: string): void{
   })
 }
 
+/**
+ * Checks if a movie has been added to a user's favorite list.
+ * @param movie - movie object
+ * @returns true or false whether a movie is a favorite or not
+ */
 isFavorite(movie: any): boolean {
   return this.FavoriteMovies.includes(movie._id);
 }
 
+/**
+ * Adds a movie to the user's favorite list. 
+ * @param movie - movie object 
+ */
 addMovieToFavorites(movie: any): void{
   this.fetchApiData.addFavoriteMovies(movie).subscribe((resp: any) => {
     console.log(resp);
@@ -107,6 +141,10 @@ addMovieToFavorites(movie: any): void{
   );
 }
 
+/**
+ * Deletes a movie from a user's favorite list.
+ * @param movie - movie object
+ */
   deleteMovieFromFavorites(movie: any): void{
     this.fetchApiData.deleteFavoriteMovie(movie).subscribe((resp: any) => {
       console.log(resp);
